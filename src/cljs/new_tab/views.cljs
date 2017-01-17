@@ -1,7 +1,11 @@
 (ns new-tab.views
-    (:require [re-frame.core :as re-frame]))
+  (:require [re-frame.core :as re-frame]))
+
+(defn link-item [text href]
+  [:li [:a {:href href} text]])
 
 (defn main-panel []
-  (let [name (re-frame/subscribe [:name])]
-    (fn []
-      [:div "Hello from " @name])))
+  (let [links @(re-frame/subscribe [:links])]
+    [:div
+     (into [:ul] (map (fn [[text href]] (link-item text href)) links))]
+    ))
