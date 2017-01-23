@@ -13,8 +13,9 @@
 
 
 (re-frame/reg-event-db
+  [(re-frame/trim-v)]
   :initialize-db
-  (fn [_ _]
+  (fn [_]
     db/default-db))
 
 (re-frame/reg-event-db
