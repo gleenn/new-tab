@@ -19,8 +19,8 @@
 
 (re-frame/reg-event-db
   :save-link
-  (fn [db [event text href]]
+  [(re-frame/path :links)]
+  (fn [links [event text href]]
     (do (.log js/console (str "text " text) (str "href " href))
-        (let [id (allocate-next-id (:links db))]
-          ;(assoc-in db [:links] {:id id :text text :href href})))))
-          (update-in db [:links] #(conj % {:id id :text text :href href}))))))
+        (let [id (allocate-next-id links)]
+          (conj links {:id id :text text :href href})))))
