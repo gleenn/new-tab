@@ -1,5 +1,4 @@
 (ns new-tab.db)
 
 (def default-db
-  {:title "Hi there beotch"
-   :links {"Hacker News" "https://news.ycombinator.com"}})
+  {:links [{:id 1 :text "Hacker News" :href "https://news.ycombinator.com"}]})
