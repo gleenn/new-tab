@@ -3,3 +3,4 @@ resources/public/js
 figwheel_server.log
 new-tab.iml
 target
+.lein-repl-history
