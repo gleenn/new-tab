@@ -9,5 +9,4 @@
 (defn links->local-store
   "Puts links into localStorage"
   [links]
-  (do (.log js/console "links to local storage " links)
-      (.setItem js/localStorage ls-key (str links))))
+  (.setItem js/localStorage ls-key (str links)))

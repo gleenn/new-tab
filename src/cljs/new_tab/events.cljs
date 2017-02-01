@@ -17,7 +17,7 @@
 (def link-interceptors [;check-spec-interceptor               ;; ensure the spec is still valid
                         (re-frame/path :links)              ;; 1st param to handler will be the value from this path
                         ->local-store                       ;; write links to localstore
-                        (re-frame/after #(.log js/console "after local store " %))
+                        ;(re-frame/after #(.log js/console "after local store " %))
                         ;(when ^boolean js/goog.DEBUG debug)  ;; look in your browser console for debug logs
                         re-frame/trim-v])                   ;; removes first (event id) element from the event vec
 
@@ -39,5 +39,4 @@
   :initialize-db                                            ;; event id being handled
   [(re-frame/inject-cofx :local-store-links) re-frame/debug] ;; obtain links from localstore
   (fn [{:keys [db local-store-links]}]                      ;; the handler being registered
-    (do (.log js/console (str local-store-links))
-        {:db (conj default-db {:links local-store-links})})))
+    {:db (conj default-db {:links local-store-links})}))

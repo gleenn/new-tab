@@ -4,14 +4,13 @@
             [clojure.string :as str]))
 
 (defn link-item [id text href]
-  [:li {:key id} [:a {:href href} text]])
+  ^{:key id} [:li [:a {:href href} text]])
 
 (defn make-input [props ratom on-save & placeholder]
   (let [input-value (ratom/atom ratom)]
     [:input {:type        "text"
              :value       @ratom
              :placeholder placeholder
-             ;:on-blur     (on-save)
              :on-change   #(reset! ratom (-> % .-target .-value))
              :on-key-down #(case (.-which %)
                              13 (on-save)
@@ -23,7 +22,6 @@
   (let [title (ratom/atom "")
         url (ratom/atom "")
         save (fn [] (do
-                      (.log js/console "save called " @title @url)
                       (on-save @title @url)
                       (reset! title)
                       (reset! url)))]
