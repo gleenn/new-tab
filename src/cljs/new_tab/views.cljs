@@ -28,16 +28,15 @@
                       (reset! title)
                       (reset! url)))]
     (fn [props]
-      [:div (make-input props title save "title")
+      [:div
+       (make-input props title save "title")
        (make-input props url save "url")]
       )))
 
 (defn main-panel []
   (let [links @(subscribe [:links])]
-    (.log js/console (str "links " links))
     [:div
      [:ul (for [link links]
             (let [{:keys [id title url]} link]
-              [link-item id title url]))]
-     [inputs {:on-save (fn [title url] (dispatch [:save-link title url]))}]
-     [:a {:on-click #(dispatch [:initialize-db]) :href "#"} "Reset"]]))
+              ^{:key id} [link-item id title url]))]
+     [inputs {:on-save (fn [title url] (dispatch [:save-link title url]))}]]))

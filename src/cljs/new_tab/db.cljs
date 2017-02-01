@@ -2,7 +2,7 @@
   (:require [re-frame.core :as re-frame]))
 
 (def default-db
-  {:links [{:id 1 :title "Hacker News" :url "https://news.ycombinator.com"}]})
+  {:links []})
 
 (def ls-key "links-reframe")
 

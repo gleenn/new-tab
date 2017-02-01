@@ -25,8 +25,7 @@
   :save-link
   link-interceptors
   (fn [links [title url]]
-    (let [id (allocate-next-id links)]
-      (conj links {:id id :title title :url url}))))
+    (conj links {:id (allocate-next-id links) :title title :url url})))
 
 (re-frame/reg-cofx
   :local-store-links
@@ -38,11 +37,7 @@
 
 (re-frame/reg-event-fx                                      ;; on app startup, create initial state
   :initialize-db                                            ;; event id being handled
-  [(re-frame/inject-cofx :local-store-links)]               ;; obtain links from localstore
-  (fn [cofx]                                                ;; the handler being registered
-    (let [db (:db cofx) local-store-links (:local-store-links cofx)]
-      (do
-        (.log js/console "cofx " cofx)
-        (if (seq local-store-links)
-          (do (.log js/console "links present " local-store-links) {:db (update-in default-db [:links] conj local-store-links)})
-          (do (.log js/console "no links present") default-db)))))) ;; all hail the new state
+  [(re-frame/inject-cofx :local-store-links) re-frame/debug] ;; obtain links from localstore
+  (fn [{:keys [db local-store-links]}]                      ;; the handler being registered
+    (do (.log js/console (str local-store-links))
+        {:db (conj default-db {:links local-store-links})})))
